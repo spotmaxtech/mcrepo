@@ -9,9 +9,6 @@ var RegistryCmd = &cobra.Command{
 	Use:   "registry",
 	Short: "registry management",
 	Long:  "registry management",
-	//Run: func(cmd *cobra.Command, args []string) {
-	//	logrus.SetLevel(logrus.DebugLevel)
-	//},
 }
 
 var RegistryList = &cobra.Command{
