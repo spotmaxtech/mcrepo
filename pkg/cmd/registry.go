@@ -19,3 +19,7 @@ var RegistryList = &cobra.Command{
 		logrus.Infof("registry list command run")
 	},
 }
+
+func init() {
+	RegistryCmd.AddCommand(RegistryList)
+}

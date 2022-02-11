@@ -15,8 +15,8 @@ func main() {
 		Long:  "maxcloud multi repo management tool",
 	}
 
-	cmd.RegistryCmd.AddCommand(cmd.RegistryList)
 	rootCmd.AddCommand(cmd.RegistryCmd)
+	rootCmd.AddCommand(cmd.RepoCmd)
 	if err := rootCmd.Execute(); err != nil {
 		fmt.Println(err)
 	}
