@@ -17,6 +17,7 @@ func main() {
 
 	rootCmd.AddCommand(cmd.RegistryCmd)
 	rootCmd.AddCommand(cmd.RepoCmd)
+	rootCmd.AddCommand(cmd.ImageCmd)
 	if err := rootCmd.Execute(); err != nil {
 		fmt.Println(err)
 	}
