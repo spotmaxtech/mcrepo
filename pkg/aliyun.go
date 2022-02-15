@@ -7,6 +7,7 @@ import (
 	"github.com/alibabacloud-go/tea/tea"
 	"github.com/sirupsen/logrus"
 	"github.com/spotmaxtech/gokit"
+	"strings"
 )
 
 var AliyunRegistryMap map[string]*AliyunRegistry
@@ -21,7 +22,7 @@ func InitAliyunRegistryMap(configList []*AliyunConfig) {
 	AliyunRegistryMap = make(map[string]*AliyunRegistry)
 	for _, config := range configList {
 		AliyunRegistryMap[config.Name] = newAliyunRegistry(config)
-		//logrus.Infof("load aliyun registry [%s]", config.Name)
+		logrus.Debugf("load aliyun registry [%s]", config.Name)
 	}
 	return
 }
@@ -66,6 +67,7 @@ func (r *AliyunRegistry) ListInstance() {
 	}
 	fmt.Println(gokit.PrettifyYaml(response))
 }
+
 func (r *AliyunRegistry) ListRepo() {
 	request := &cr20181201.ListRepositoryRequest{
 		InstanceId: tea.String(r.InstanceId),
@@ -80,16 +82,40 @@ func (r *AliyunRegistry) ListRepo() {
 	}
 }
 
-func (r *AliyunRegistry) ListRepoTag(repoId string) {
+func (r *AliyunRegistry) ListRepoTag(repoName string) {
+	// todo: check repo name
+	items := strings.Split(repoName, "/")
+	if len(items) != 2 {
+		logrus.Fatalln("please input namespace/repo format")
+	}
+	namespace, repo := items[0], items[1]
+
+	// search repo id
+	repoRequest := &cr20181201.ListRepositoryRequest{
+		InstanceId:        tea.String(r.InstanceId),
+		RepoNamespaceName: tea.String(namespace),
+		RepoName:          tea.String(repo),
+		RepoStatus:        tea.String("NORMAL"),
+	}
+	repoResponse, err := r.Client.ListRepository(repoRequest)
+	if err != nil {
+		logrus.Fatalln(err.Error())
+	}
+	if len(repoResponse.Body.Repositories) != 1 {
+		logrus.Fatalf("%s not correct\n", repoName)
+	}
+	repoId := repoResponse.Body.Repositories[0].RepoId
+
+	// list repo tag
 	request := &cr20181201.ListRepoTagRequest{
 		InstanceId: tea.String(r.InstanceId),
-		RepoId:     tea.String(repoId),
+		RepoId:     repoId,
 	}
 	response, err := r.Client.ListRepoTag(request)
 	if err != nil {
 		logrus.Fatalln(err.Error())
 	}
-	fmt.Println(gokit.PrettifyYaml(response))
+
 	for _, image := range response.Body.Images {
 		fmt.Println(*image.ImageId, *image.Tag)
 	}
