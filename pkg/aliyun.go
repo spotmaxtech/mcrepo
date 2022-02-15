@@ -21,7 +21,7 @@ func InitAliyunRegistryMap(configList []*AliyunConfig) {
 	AliyunRegistryMap = make(map[string]*AliyunRegistry)
 	for _, config := range configList {
 		AliyunRegistryMap[config.Name] = newAliyunRegistry(config)
-		logrus.Infof("load aliyun registry [%s]", config.Name)
+		//logrus.Infof("load aliyun registry [%s]", config.Name)
 	}
 	return
 }
@@ -76,7 +76,7 @@ func (r *AliyunRegistry) ListRepo() {
 		logrus.Fatalln(err.Error())
 	}
 	for _, repo := range response.Body.Repositories {
-		fmt.Println(*repo.RepoName, *repo.RepoNamespaceName)
+		fmt.Printf("%s/%s\n", *repo.RepoNamespaceName, *repo.RepoName)
 	}
 }
 
