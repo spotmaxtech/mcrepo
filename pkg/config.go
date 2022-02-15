@@ -8,8 +8,8 @@ import (
 var GMcrepoConfig = McrepoConfig{}
 
 type McrepoConfig struct {
-	CurrentContext string
 	Aliyun         []*AliyunConfig `mapstructure:"aliyun"`
+	CurrentContext CurrentContext  `mapstructure:"current_context"`
 }
 
 type CurrentContext struct {

@@ -16,12 +16,16 @@ func main() {
 		Long:  "maxcloud multi repo management tool",
 	}
 
+	// config and init
+	pkg.InitConfig()
+	pkg.InitAliyunRegistryMap(pkg.GMcrepoConfig.Aliyun)
+	if pkg.GMcrepoConfig.CurrentContext.Platform == "aliyun" {
+		pkg.CurrentRegistry = pkg.AliyunRegistryMap[pkg.GMcrepoConfig.CurrentContext.RegistryName]
+	}
+
 	rootCmd.AddCommand(cmd.RegistryCmd)
 	rootCmd.AddCommand(cmd.RepoCmd)
 	rootCmd.AddCommand(cmd.ImageCmd)
-
-	pkg.InitConfig()
-	pkg.InitAliyunRegistryMap(pkg.GMcrepoConfig.Aliyun)
 
 	if err := rootCmd.Execute(); err != nil {
 		fmt.Println(err)

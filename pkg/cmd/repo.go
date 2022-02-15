@@ -3,6 +3,7 @@ package cmd
 import (
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
+	"github.com/spotmaxtech/mcrepo/pkg"
 )
 
 var RepoCmd = &cobra.Command{
@@ -16,6 +17,7 @@ var RepoList = &cobra.Command{
 	Short: "repository list",
 	Long:  "repository list",
 	Run: func(cmd *cobra.Command, args []string) {
+		pkg.CurrentRegistry.ListRepo()
 		logrus.Infof("repository list command run")
 	},
 }
