@@ -13,3 +13,9 @@ func TestAliyunRegistry(t *testing.T) {
 		registry.ListInstance()
 	}
 }
+
+func TestAliyunRegistryListRepo(t *testing.T) {
+	InitConfig()
+	InitAliyunRegistryMap(GMcrepoConfig.Aliyun)
+	AliyunRegistryMap[""].ListRepo("")
+}

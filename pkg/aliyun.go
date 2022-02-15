@@ -46,10 +46,20 @@ func (r *AliyunRegistry) ListInstance() {
 	if err != nil {
 		logrus.Fatalln(err.Error())
 	}
-	fmt.Println(gokit.PrettifyJson(response, true))
+	fmt.Println(gokit.PrettifyYaml(response))
 }
-func (r *AliyunRegistry) ListRepo() {
-
+func (r *AliyunRegistry) ListRepo(instanceId string) {
+	request := &cr20181201.ListRepositoryRequest{
+		InstanceId: tea.String(instanceId),
+		RepoStatus: tea.String("NORMAL"),
+	}
+	response, err := r.Client.ListRepository(request)
+	if err != nil {
+		logrus.Fatalln(err.Error())
+	}
+	for _, repo := range response.Body.Repositories {
+		fmt.Println(*repo.RepoName, *repo.RepoNamespaceName)
+	}
 }
 
 func (r *AliyunRegistry) ListImage() {
