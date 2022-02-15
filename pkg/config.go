@@ -8,7 +8,13 @@ import (
 var GMcrepoConfig = McrepoConfig{}
 
 type McrepoConfig struct {
-	Aliyun []*AliyunConfig `mapstructure:"aliyun"`
+	CurrentContext string
+	Aliyun         []*AliyunConfig `mapstructure:"aliyun"`
+}
+
+type CurrentContext struct {
+	Platform     string `mapstructure:"platform"`
+	RegistryName string `mapstructure:"registry_name"`
 }
 
 type AliyunConfig struct {
@@ -16,11 +22,7 @@ type AliyunConfig struct {
 	AccessKeyId  string `mapstructure:"access_key_id"`
 	AccessSecret string `mapstructure:"access_secret"`
 	Endpoint     string `mapstructure:"endpoint"`
-	Instances    []*AliyunConfigInstance
-}
-
-type AliyunConfigInstance struct {
-	Id string `mapstructure:"id"`
+	InstanceName string `mapstructure:"instance_name"`
 }
 
 func InitConfig() {

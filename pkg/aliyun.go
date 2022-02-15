@@ -12,7 +12,9 @@ import (
 var AliyunRegistryMap map[string]*AliyunRegistry
 
 type AliyunRegistry struct {
-	Client *cr20181201.Client
+	Client       *cr20181201.Client
+	InstanceName string
+	InstanceId   string
 }
 
 func InitAliyunRegistryMap(configList []*AliyunConfig) {
@@ -35,8 +37,24 @@ func newAliyunRegistry(config *AliyunConfig) *AliyunRegistry {
 		logrus.Fatalln(err.Error())
 	}
 
+	request := &cr20181201.ListInstanceRequest{
+		InstanceName: tea.String(config.InstanceName),
+	}
+	response, err := client.ListInstance(request)
+	if err != nil {
+		logrus.Fatalln(err.Error())
+	}
+
+	var instanceId string
+	for _, i := range response.Body.Instances {
+		if *i.InstanceName == config.InstanceName {
+			instanceId = *i.InstanceId
+		}
+	}
 	return &AliyunRegistry{
-		Client: client,
+		Client:       client,
+		InstanceName: config.InstanceName,
+		InstanceId:   instanceId,
 	}
 }
 
@@ -48,9 +66,9 @@ func (r *AliyunRegistry) ListInstance() {
 	}
 	fmt.Println(gokit.PrettifyYaml(response))
 }
-func (r *AliyunRegistry) ListRepo(instanceId string) {
+func (r *AliyunRegistry) ListRepo() {
 	request := &cr20181201.ListRepositoryRequest{
-		InstanceId: tea.String(instanceId),
+		InstanceId: tea.String(r.InstanceId),
 		RepoStatus: tea.String("NORMAL"),
 	}
 	response, err := r.Client.ListRepository(request)
@@ -62,9 +80,9 @@ func (r *AliyunRegistry) ListRepo(instanceId string) {
 	}
 }
 
-func (r *AliyunRegistry) ListRepoTag(instanceId string, repoId string) {
+func (r *AliyunRegistry) ListRepoTag(repoId string) {
 	request := &cr20181201.ListRepoTagRequest{
-		InstanceId: tea.String(instanceId),
+		InstanceId: tea.String(r.InstanceId),
 		RepoId:     tea.String(repoId),
 	}
 	response, err := r.Client.ListRepoTag(request)

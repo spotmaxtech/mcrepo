@@ -17,11 +17,11 @@ func TestAliyunRegistry(t *testing.T) {
 func TestAliyunRegistryListRepo(t *testing.T) {
 	InitConfig()
 	InitAliyunRegistryMap(GMcrepoConfig.Aliyun)
-	AliyunRegistryMap[""].ListRepo("")
+	AliyunRegistryMap["first"].ListRepo()
 }
 
 func TestAliyunRegistryListRepoTag(t *testing.T) {
 	InitConfig()
 	InitAliyunRegistryMap(GMcrepoConfig.Aliyun)
-	AliyunRegistryMap[""].ListRepoTag("", "")
+	AliyunRegistryMap["first"].ListRepoTag("")
 }
