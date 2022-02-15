@@ -117,6 +117,6 @@ func (r *AliyunRegistry) ListRepoTag(repoName string) {
 	}
 
 	for _, image := range response.Body.Images {
-		fmt.Println(*image.ImageId, *image.Tag)
+		fmt.Println(*image.Digest, *image.Tag)
 	}
 }
