@@ -19,3 +19,9 @@ func TestAliyunRegistryListRepo(t *testing.T) {
 	InitAliyunRegistryMap(GMcrepoConfig.Aliyun)
 	AliyunRegistryMap[""].ListRepo("")
 }
+
+func TestAliyunRegistryListRepoTag(t *testing.T) {
+	InitConfig()
+	InitAliyunRegistryMap(GMcrepoConfig.Aliyun)
+	AliyunRegistryMap[""].ListRepoTag("", "")
+}

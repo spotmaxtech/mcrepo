@@ -62,6 +62,17 @@ func (r *AliyunRegistry) ListRepo(instanceId string) {
 	}
 }
 
-func (r *AliyunRegistry) ListImage() {
-
+func (r *AliyunRegistry) ListRepoTag(instanceId string, repoId string) {
+	request := &cr20181201.ListRepoTagRequest{
+		InstanceId: tea.String(instanceId),
+		RepoId:     tea.String(repoId),
+	}
+	response, err := r.Client.ListRepoTag(request)
+	if err != nil {
+		logrus.Fatalln(err.Error())
+	}
+	fmt.Println(gokit.PrettifyYaml(response))
+	for _, image := range response.Body.Images {
+		fmt.Println(*image.ImageId, *image.Tag)
+	}
 }
