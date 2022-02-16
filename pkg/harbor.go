@@ -17,9 +17,9 @@ type HarborRegistry struct {
 
 func InitHarborRegistryMap(configList []*HarborConfig) {
 	HarborRegistryMap = make(map[string]*HarborRegistry)
-	for _, config := range configList {
-		HarborRegistryMap[config.Name] = newHarborRegistry(config)
-		logrus.Debugf("load harbor registry [%s]", config.Name)
+	for _, cfg := range configList {
+		HarborRegistryMap[cfg.Name] = newHarborRegistry(cfg)
+		logrus.Debugf("load harbor registry [%s]", cfg.Name)
 	}
 	return
 }
