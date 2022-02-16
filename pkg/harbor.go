@@ -25,13 +25,13 @@ func InitHarborRegistryMap(configList []*HarborConfig) {
 }
 
 func newHarborRegistry(harborConfig *HarborConfig) *HarborRegistry {
-	client, err := apiv2.NewRESTClientForHost(harborConfig.Api,
+	clientHost, err := apiv2.NewRESTClientForHost(harborConfig.Api,
 		harborConfig.Username, harborConfig.Password, &config.Options{})
 	if err != nil {
 		fmt.Println(err.Error())
 	}
 	return &HarborRegistry{
-		Client: client,
+		Client: clientHost,
 	}
 }
 
