@@ -6,12 +6,13 @@ require (
 	github.com/alibabacloud-go/cr-20181201 v1.0.7
 	github.com/alibabacloud-go/darabonba-openapi v0.1.14
 	github.com/alibabacloud-go/tea v1.1.17
-	github.com/mittwald/goharbor-client/v5 v5.0.3
 	github.com/sirupsen/logrus v1.8.1
 	github.com/spf13/cobra v1.3.0
 	github.com/spf13/viper v1.10.0
 	github.com/spotmaxtech/gokit v1.0.9
 )
+
+require github.com/spotmaxtech/goharbor-client/v5 v5.0.4
 
 require (
 	github.com/PuerkitoBio/purell v1.1.1 // indirect
@@ -65,6 +66,7 @@ require (
 	github.com/mailru/easyjson v0.7.7 // indirect
 	github.com/mattn/go-colorable v0.1.12 // indirect
 	github.com/mattn/go-isatty v0.0.14 // indirect
+	github.com/mattn/go-sqlite3 v1.14.6 // indirect
 	github.com/mitchellh/go-homedir v1.1.0 // indirect
 	github.com/mitchellh/mapstructure v1.4.3 // indirect
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect

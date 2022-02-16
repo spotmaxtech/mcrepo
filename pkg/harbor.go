@@ -3,9 +3,9 @@ package pkg
 import (
 	"context"
 	"fmt"
-	"github.com/mittwald/goharbor-client/v5/apiv2"
-	"github.com/mittwald/goharbor-client/v5/apiv2/pkg/config"
 	"github.com/sirupsen/logrus"
+	"github.com/spotmaxtech/goharbor-client/v5/apiv2"
+	"github.com/spotmaxtech/goharbor-client/v5/apiv2/pkg/config"
 	"github.com/spotmaxtech/gokit"
 )
 
