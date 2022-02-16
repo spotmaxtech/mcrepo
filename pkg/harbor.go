@@ -41,11 +41,11 @@ func (r *HarborRegistry) ListRepo() {
 		fmt.Println(err.Error())
 	}
 	fmt.Println(gokit.PrettifyYaml(projects))
-	registries, err := r.Client.ListRegistries(context.Background())
+	repositories, err := r.Client.ListRepositories(context.Background(), "official-website")
 	if err != nil {
-		fmt.Println(err.Error())
+		return
 	}
-	fmt.Println(gokit.PrettifyYaml(registries))
+	fmt.Println(gokit.PrettifyYaml(repositories))
 }
 
 func (r *HarborRegistry) ListRepoTag(repoName string) {
