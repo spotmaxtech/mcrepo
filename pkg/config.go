@@ -9,6 +9,7 @@ var GMcrepoConfig = McrepoConfig{}
 
 type McrepoConfig struct {
 	Aliyun         []*AliyunConfig `mapstructure:"aliyun"`
+	Harbor         []*HarborConfig `mapstructure:"harbor"`
 	CurrentContext CurrentContext  `mapstructure:"current_context"`
 }
 
@@ -23,6 +24,13 @@ type AliyunConfig struct {
 	AccessSecret string `mapstructure:"access_secret"`
 	Endpoint     string `mapstructure:"endpoint"`
 	InstanceName string `mapstructure:"instance_name"`
+}
+
+type HarborConfig struct {
+	Name     string `mapstructure:"name"`
+	Username string `mapstructure:"username"`
+	Password string `mapstructure:"password"`
+	Api      string `mapstructure:"api"`
 }
 
 func InitConfig() {
