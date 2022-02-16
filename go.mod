@@ -9,10 +9,9 @@ require (
 	github.com/sirupsen/logrus v1.8.1
 	github.com/spf13/cobra v1.3.0
 	github.com/spf13/viper v1.10.0
+	github.com/spotmaxtech/goharbor-client/v5 v5.0.4
 	github.com/spotmaxtech/gokit v1.0.9
 )
-
-require github.com/spotmaxtech/goharbor-client/v5 v5.0.4
 
 require (
 	github.com/PuerkitoBio/purell v1.1.1 // indirect
