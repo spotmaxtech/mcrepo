@@ -9,7 +9,7 @@ import (
 )
 
 func main() {
-	logrus.SetLevel(logrus.DebugLevel)
+	logrus.SetLevel(logrus.ErrorLevel)
 	rootCmd := &cobra.Command{
 		Use:   "mcrepo",
 		Short: "maxcloud multi repo management tool",
@@ -18,9 +18,15 @@ func main() {
 
 	// config and init
 	pkg.InitConfig()
+
 	pkg.InitAliyunRegistryMap(pkg.GMcrepoConfig.Aliyun)
 	if pkg.GMcrepoConfig.CurrentContext.Platform == "aliyun" {
 		pkg.CurrentRegistry = pkg.AliyunRegistryMap[pkg.GMcrepoConfig.CurrentContext.RegistryName]
+	}
+
+	pkg.InitHarborRegistryMap(pkg.GMcrepoConfig.Harbor)
+	if pkg.GMcrepoConfig.CurrentContext.Platform == "harbor" {
+		pkg.CurrentRegistry = pkg.HarborRegistryMap[pkg.GMcrepoConfig.CurrentContext.RegistryName]
 	}
 
 	rootCmd.AddCommand(cmd.RegistryCmd)
