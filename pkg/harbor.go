@@ -6,7 +6,7 @@ import (
 	"github.com/sirupsen/logrus"
 	"github.com/spotmaxtech/goharbor-client/v5/apiv2"
 	"github.com/spotmaxtech/goharbor-client/v5/apiv2/pkg/config"
-	"github.com/spotmaxtech/gokit"
+	"strings"
 )
 
 var HarborRegistryMap map[string]*HarborRegistry
@@ -38,15 +38,37 @@ func newHarborRegistry(harborConfig *HarborConfig) *HarborRegistry {
 func (r *HarborRegistry) ListRepo() {
 	projects, err := r.Client.ListProjects(context.Background(), "")
 	if err != nil {
-		fmt.Println(err.Error())
+		logrus.Fatalln(err.Error())
 	}
-	fmt.Println(gokit.PrettifyYaml(projects))
-	repositories, err := r.Client.ListRepositories(context.Background(), "official-website")
-	if err != nil {
-		return
+
+	for _, p := range projects {
+		repositories, err := r.Client.ListRepositories(context.Background(), p.Name)
+		if err != nil {
+			logrus.Fatalln(err.Error())
+		}
+		for _, repo := range repositories {
+			fmt.Println(repo.Name)
+		}
 	}
-	fmt.Println(gokit.PrettifyYaml(repositories))
 }
 
 func (r *HarborRegistry) ListRepoTag(repoName string) {
+	items := strings.Split(repoName, "/")
+	if len(items) != 2 {
+		logrus.Fatalln("please input project/repo format")
+	}
+	project, repo := items[0], items[1]
+
+	artifacts, err := r.Client.ListArtifacts(context.Background(), project, repo)
+	if err != nil {
+		fmt.Println(err.Error())
+	}
+	for _, a := range artifacts {
+		fmt.Printf("%s ", a.Digest)
+		for _, t := range a.Tags {
+			fmt.Printf("%s ", t.Name)
+		}
+		fmt.Println()
+	}
+
 }
